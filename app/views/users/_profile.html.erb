@@ -10,6 +10,24 @@
 		<th>introduction</th>
 		<th><%= user.introduction %></th>
 	</tr>
+
+	<tr>
+		<th>follows</th>
+		<th>
+			<%= link_to follow一覧 do %>
+				<%= @user.followings.count %>
+			<% end %>
+		</th>
+	</tr>
+
+	<tr>
+		<th>followers</th>
+		<th>
+			<%= link_to followers一覧 do %>
+				<%= @user.followers.count %>
+			<% end %>
+		</th>
+	</tr>
 </table>
 
 <div class="row">
