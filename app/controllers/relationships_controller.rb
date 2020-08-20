@@ -1,9 +1,18 @@
 class RelationshipsController < ApplicationController
 
-	before_action :set_user
+  def show_followings
+    user = User.find[:user_id]
+    @followings = user.followings
+  end
+
+  def show_followers
+    user = User.find[:user_id]
+    @followers = user.followers
+  end
 
   def create
-    following = current_user.follow(@user)
+    user = User.find(params[:user_id])
+    following = current_user.follow(user)
     if following.save
       flash[:success] = 'ユーザーをフォローしました'
       redirect_back(fallback_location: root_path)
@@ -14,7 +23,8 @@ class RelationshipsController < ApplicationController
   end
 
   def destroy
-    following = current_user.unfollow(@user)
+    user = User.find(params[:user_id])
+    following = current_user.unfollow(user)
     if following.destroy
       flash[:success] = 'ユーザーのフォローを解除しました'
       redirect_back(fallback_location: root_path)
@@ -22,11 +32,6 @@ class RelationshipsController < ApplicationController
       flash.now[:alert] = 'ユーザーのフォロー解除に失敗しました'
       redirect_back(fallback_location: root_path)
     end
-  end
-
-  private
-  def
-    @user = User.find(params[:relationship][:follow_id])
   end
 
 end
