@@ -37,25 +37,14 @@
 				</tr>
 		</table>
 
-		<table>
-			<% @comments.each do |comment| %>
-			<tr>
-				<td>
-					<%= attachment_image_tag(comment.user, :profile_image, :fill, 100, 100, fallback: "no-image-mini.jpg") %><br>
-					<%= comment.user.name %>
-				</td>
-				<td><%= comment.comment %></td>
-				<% if comment.user == current_user %>
-				<td><%= link_to "Destroy", book_book_comment_path(comment.id), method: :delete, class: "btn-sm btn-danger"%></td>
-				<% end %>
-			</tr>
-			<% end %>
-		</table>
+		<!-- コメント一覧 -->
+		<div id="comments_area">
+			<%= render partial:'book_comments/comments', locals: { comments: @comments} %>
+		</div>
 
-		<%= form_with(model:[@book, @comment], method: :post) do |f| %>
-			<%= f.text_area :comment %>
-			<%= f.submit "送信" %>
-		<% end %>
+		<div id="comment_form">
+			<%= render partial: 'book_comments/comment_form', locals: {comment: @comment, book: @book} %>
+		</div>
 
 	</div>
 </div>
